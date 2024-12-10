@@ -1,0 +1,29 @@
+package com.imaginnovate.exam.employeeController;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import  com.imaginnovate.exam.entity;
+import  com.imaginnovate.exam.employeeService;
+
+
+
+@RestController
+
+public class EmployeeController {
+
+  @Autowired
+  private EmployeeService employeeService;
+
+  @PostMapping("/api/employees")
+  public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+    try {
+      Employee savedEmployee = employeeService.saveEmployee(employee);
+      return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
+    } catch (Exception e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+}
+
